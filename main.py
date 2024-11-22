@@ -1,24 +1,31 @@
+# module used for clearing the terminal
 from os import system, name
 import random as r
 import questions as q
 
+# loads questions stored in a seperate file
 questions = q.questions
+# initialises list category names
 category_names = [0] * (len(questions) + 1)
 category_names[0] = "General Knowledge (WIP)"
 for key, value in questions.items():
     category_names[value["ID"] - 1] = key
 
+# function to clear screen
 def clear():
     if name == 'nt':
         system('cls')
     else:
         system('clear')
 
+# function to load the start screen
 def start_menu():
     clear()
     print("- Quiz -")
-    input("Welcome to the quiz game! Press enter to start")
+    print("Welcome to the quiz!")
+    return input("Press enter to start or type \"q\" to quit: ")
     
+# function to allow the user to select a category
 def select_category():
     clear()
     while True:
@@ -27,6 +34,7 @@ def select_category():
             print(f"{index + 1}. {value}")
         selection = input("Please choose a category: ")
         global selected_category
+        # allows the user to type the option number or the category name and checks if the input is valid
         if selection.isdigit() and selection != "1":
             selected_category = category_names[int(selection) - 1]
             break
@@ -40,6 +48,7 @@ def select_category():
     print(f"You have chosen \"{selected_category}\"")
     input("Press enter to start")
 
+# function runs the quiz section
 def quiz():
     selected_category = "Science"
     category_questions = questions[selected_category]
@@ -71,7 +80,10 @@ def quiz():
     print(f"You got {score}/{question_num - 1} questions correct")
     input("Press enter to return to the main menu")
 
-start_menu()
-select_category()
-quiz()
+# allows the user to keep playing unless they quit at the start screen
+while True:
+    if start_menu().upper() == "Q":
+        break
+    select_category()
+    quiz()
 
