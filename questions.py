@@ -1,6 +1,5 @@
 questions = {
     "Science": {
-        "ID": 2,
         "What is the chemical symbol for water?": {
             "H2O": True,
             "CO2": False,
@@ -123,7 +122,6 @@ questions = {
         }
     },
     "History": {
-        "ID": 3,
         "Who was the first President of the United States?": {
             "Abraham Lincoln": False,
             "George Washington": True,
