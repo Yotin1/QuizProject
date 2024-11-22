@@ -6,10 +6,9 @@ import questions as q
 # loads questions stored in a seperate file
 questions = q.questions
 # initialises list category names
-category_names = [0] * (len(questions) + 1)
-category_names[0] = "General Knowledge (WIP)"
-for key, value in questions.items():
-    category_names[value["ID"] - 1] = key
+category_names = ["General Knowledge"]
+for key in questions.keys():
+    category_names.append(key)
 
 # function to clear screen
 def clear():
@@ -35,13 +34,12 @@ def select_category():
         selection = input("Please choose a category: ")
         global selected_category
         # allows the user to type the option number or the category name and checks if the input is valid
-        if selection.isdigit() and selection != "1":
+        if selection.isdigit():
             selected_category = category_names[int(selection) - 1]
             break
         elif selection.casefold() in (i.casefold() for i in category_names):
             selected_category = category_names[[i.casefold() for i in category_names].index(selection.casefold())]
-            if selected_category.casefold() != category_names[0].casefold():
-                break
+            break
         clear()
         print("Invalid category selected, Please try again")
     clear()
@@ -50,10 +48,14 @@ def select_category():
 
 # function that runs the quiz section
 def quiz():
-    category_questions = questions[selected_category]
-    category_questions.pop("ID")
-    random_ids = r.sample(range(20), k=10)
-    input(random_ids)
+    # if general knowledge is selected, questions from all categories will be picked
+    if selected_category == category_names[0]:
+        category_questions = {}
+        for i in range(len(category_names) - 1):
+            category_questions.update(list(questions.values())[i])
+    else:
+        category_questions = questions[selected_category]
+    random_ids = r.sample(range(len(category_questions)), k=10)
     random_questions = []
     letters = ["A", "B", "C", "D"]
     for id in random_ids:
