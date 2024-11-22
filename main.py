@@ -48,16 +48,16 @@ def select_category():
     print(f"You have chosen \"{selected_category}\"")
     input("Press enter to start")
 
-# function runs the quiz section
+# function that runs the quiz section
 def quiz():
-    selected_category = "Science"
     category_questions = questions[selected_category]
     category_questions.pop("ID")
+    random_ids = r.sample(range(20), k=10)
+    input(random_ids)
     random_questions = []
     letters = ["A", "B", "C", "D"]
-    for i in range(10):
-        random_questions.append(r.choice(list(category_questions.items())))
-        category_questions.pop(random_questions[i][0])
+    for id in random_ids:
+        random_questions.append(list(category_questions.items())[id])
     question_num = 1
     score = 0
     for question in random_questions:
