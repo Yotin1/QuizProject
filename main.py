@@ -54,6 +54,7 @@ def quiz():
     category_questions = questions[selected_category]
     category_questions.pop("ID")
     random_questions = []
+    letters = ["A", "B", "C", "D"]
     for i in range(10):
         random_questions.append(r.choice(list(category_questions.items())))
         category_questions.pop(random_questions[i][0])
@@ -63,10 +64,13 @@ def quiz():
         clear()
         correct_answer = ""
         print(f"{question_num}. {question[0]}")
-        for option in question[1].keys():
-            if question[1][option] is True:
-                correct_answer = option
-            print(f"    {option}")
+        options = list(question[1].keys())
+        # shuffles the order the answers appear in the terminal
+        r.shuffle(options)
+        for i in range(len(options)):
+            if question[1][options[i]] is True:
+                correct_answer = f"{letters[i]}. {options[i]}"
+            print(f"    {letters[i]}. {options[i]}")
         answer = input("Answer: ")
         if answer.upper() == correct_answer[0].upper():
             print("Correct!")
