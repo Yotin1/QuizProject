@@ -35,8 +35,12 @@ def select_category():
         global selected_category
         # allows the user to type the option number or the category name and checks if the input is valid
         if selection.isdigit():
-            selected_category = category_names[int(selection) - 1]
-            break
+            try:
+                selected_category = category_names[int(selection) - 1]
+            except IndexError:
+                print("Invalid category selected, Please try again")
+            else:
+                break
         elif selection.casefold() in (i.casefold() for i in category_names):
             selected_category = category_names[[i.casefold() for i in category_names].index(selection.casefold())]
             break
